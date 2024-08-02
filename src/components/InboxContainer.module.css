@@ -1,0 +1,16 @@
+.inboxContainer {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    border: 2px solid #eee;
+    border-top: 0;
+    max-height: 60vh;
+    min-width: 30%;
+  }
+  
+  .inbox {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  

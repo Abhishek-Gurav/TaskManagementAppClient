@@ -1,0 +1,14 @@
+.addTask {
+    text-align: center;
+  }
+  
+  .addButton {
+    background: #6c63ff;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border: none;
+  }
+  

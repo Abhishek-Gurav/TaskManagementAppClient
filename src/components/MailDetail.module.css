@@ -1,0 +1,75 @@
+.mailDetail {
+    width: 70%;
+    flex-grow: 1;
+    padding: 20px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+    border: 2px solid #eee;
+    border-left: 0;
+    border-top: 0;
+  }
+  
+  .mailDetailHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .mailContentsSubject {
+    margin-left: 10px;
+  }
+  .mailContentsTitle {
+    font-size: 20px;
+  }
+  
+  .mailIcons {
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  #delete {
+    color: #D11A2A;
+  }
+  
+  .mailContents {
+    margin-top: 20px;
+    position: relative;
+    flex-grow: 1;
+  }
+  
+  .mail {
+    padding: 15px;
+    border-radius: 5px;
+    background: #f9f9f9;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .mailTime {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    position: absolute;
+    right: 5px;
+    top: 16px;
+    align-items: center;
+    color: #999;
+    margin-bottom: 10px;
+  }
+  
+  .mailInside {
+    line-height: 1.6;
+  }
+  
+  .mailChecklist {
+    margin-top: 30px;
+  }
+  
+  .mailChecklistDate {
+    color: #999;
+    margin-top: 5px;
+  }
