@@ -18,7 +18,6 @@ const MailItem = ({ task, currentTask, setCurrentTask, deleteTask, toggleTask })
 
   return (
     <div
-      onClick={handleClick}
       className={`${styles.msg} ${task === currentTask ? styles.selectedBg : ''} ${styles.animY}`}
     >
       <input
@@ -30,7 +29,7 @@ const MailItem = ({ task, currentTask, setCurrentTask, deleteTask, toggleTask })
         checked={task.status === 'completed'}
       />
       <label htmlFor={task._id}></label>
-      <div className={styles.msgContent}>
+      <div onClick={handleClick} className={styles.msgContent}>
         <div className={styles.msgTitle}>{task.name}</div>
         <div className={styles.msgDate}>{formattedDate}</div>
       </div>

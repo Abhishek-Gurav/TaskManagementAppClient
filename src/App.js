@@ -39,7 +39,7 @@ const App = () => {
   }, [authToken]);
 
   const fetchTasks = async () => {
-    const res = await fetch('http://localhost:5000/api/tasks', {
+    const res = await fetch('https://taskmanagementappserver.onrender.com/api/tasks', {
       headers: { 'x-auth-token': authToken }
     });
     const data = await res.json();
@@ -50,17 +50,20 @@ const App = () => {
   };
 
   const addTask = async task => {
-    const res = await fetch('http://localhost:5000/api/tasks', {
+    const res = await fetch('https://taskmanagementappserver.onrender.com/api/tasks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-auth-token': authToken },
       body: JSON.stringify(task)
     });
     const data = await res.json();
     setTasks([...tasks, data]);
+    if(currentTask == null){
+      setCurrentTask(data);
+    }
   };
 
   const updateTask = async task => {
-    const res = await fetch(`http://localhost:5000/api/tasks/${task._id}`, {
+    const res = await fetch(`https://taskmanagementappserver.onrender.com/api/tasks/${task._id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-auth-token': authToken },
       body: JSON.stringify(task)
@@ -72,18 +75,18 @@ const App = () => {
 
   const deleteTask = async id => {
     if (currentTask?._id === id) setCurrentTask(null);
-    await fetch(`http://localhost:5000/api/tasks/${id}`, {
+    await fetch(`https://taskmanagementappserver.onrender.com/api/tasks/${id}`, {
       method: 'DELETE',
       headers: { 'x-auth-token': authToken }
     });
     setTasks(tasks.filter(task => task._id !== id));
-    if (currentTask === null && tasks) {
+    if (currentTask == null && tasks) {
       setCurrentTask(tasks[0])
     }
   };
 
   const toggleTask = async id => {
-    const res = await fetch(`http://localhost:5000/api/tasks/${id}/toggleTask`, {
+    const res = await fetch(`https://taskmanagementappserver.onrender.com/api/tasks/${id}/toggleTask`, {
       method: 'POST',
       headers: { 'x-auth-token': authToken }
     });
@@ -113,11 +116,10 @@ const App = () => {
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login setAuthToken={setAuthToken} />} />
-            <Route path="/landing" element={<Landing />} />
             <Route path="/mailDetails" element={<MailDetailPage currentTask={currentTask} deleteTask={deleteTask} updateTask={updateTask} setCurrentTask={setCurrentTask} clearCurrent={() => setCurrentTask(null)} />} />
             <Route path="/addTask" element={<AddTask addTask={addTask} />} />
             <Route path="/editTask" element={<AddTask addTask={addTask} updateTask={updateTask} currentTask={currentTask} />} />
-            <Route path="/" element={authToken ? (
+            <Route path="*" element={authToken ? (
               <div className='flex flex-col w-4/5 mx-auto'>
                 <Header setSearchQuery={setSearchQuery} />
                 <div className={`${styles.mainContainer}`}>
@@ -126,7 +128,7 @@ const App = () => {
                 </div>
               </div>
             ) : (
-              <Navigate to="/landing" />
+              <Landing />
             )} />
           </Routes>
         </div>
