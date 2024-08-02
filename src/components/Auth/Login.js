@@ -13,7 +13,7 @@ const Login = ({ setAuthToken }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:5000/api/auth/login", {
+    const res = await fetch("https://taskmanagementappserver.onrender.com/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -21,7 +21,7 @@ const Login = ({ setAuthToken }) => {
 
     if (res.ok) {
       const data = await res.json();
-      localStorage.setItem("token", data.token); // Save token to local storage
+      localStorage.setItem("token", data.token);
       setAuthToken(data.token);
       navigate("/");
     } else {
