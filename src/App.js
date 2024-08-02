@@ -39,7 +39,7 @@ const App = () => {
   }, [authToken]);
 
   const fetchTasks = async () => {
-    const res = await fetch('http://localhost:5000/api/tasks', {
+    const res = await fetch('https://taskmanagementappserver.onrender.com/api/tasks', {
       headers: { 'x-auth-token': authToken }
     });
     const data = await res.json();
@@ -50,7 +50,7 @@ const App = () => {
   };
 
   const addTask = async task => {
-    const res = await fetch('http://localhost:5000/api/tasks', {
+    const res = await fetch('https://taskmanagementappserver.onrender.com/api/tasks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-auth-token': authToken },
       body: JSON.stringify(task)
@@ -60,7 +60,7 @@ const App = () => {
   };
 
   const updateTask = async task => {
-    const res = await fetch(`http://localhost:5000/api/tasks/${task._id}`, {
+    const res = await fetch(`https://taskmanagementappserver.onrender.com/api/tasks/${task._id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-auth-token': authToken },
       body: JSON.stringify(task)
@@ -83,7 +83,7 @@ const App = () => {
   };
 
   const toggleTask = async id => {
-    const res = await fetch(`http://localhost:5000/api/tasks/${id}/toggleTask`, {
+    const res = await fetch(`https://taskmanagementappserver.onrender.com/api/tasks/${id}/toggleTask`, {
       method: 'POST',
       headers: { 'x-auth-token': authToken }
     });
