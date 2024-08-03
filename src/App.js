@@ -10,6 +10,7 @@ import InboxContainer from './components/InboxContainer';
 import MailDetail from './components/MailDetail';
 import Header from './components/Header';
 import AddTask from './components/AddTask';
+import Loader from './components/Loader';
 
 const App = () => {
   const [authToken, setAuthTokenState] = useState(localStorage.getItem('token'));
@@ -17,6 +18,7 @@ const App = () => {
   const [currentTask, setCurrentTask] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isTablet, setIsTablet] = useState(window.innerWidth <= 768);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,6 +41,7 @@ const App = () => {
   }, [authToken]);
 
   const fetchTasks = async () => {
+    setLoading(true);
     const res = await fetch('https://taskmanagementappserver.onrender.com/api/tasks', {
       headers: { 'x-auth-token': authToken }
     });
@@ -47,9 +50,11 @@ const App = () => {
         setCurrentTask(data[0])
     }
     setTasks(data);
+    setLoading(false);
   };
 
   const addTask = async task => {
+    setLoading(true);
     const res = await fetch('https://taskmanagementappserver.onrender.com/api/tasks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-auth-token': authToken },
@@ -60,9 +65,11 @@ const App = () => {
     if(currentTask == null){
       setCurrentTask(data);
     }
+    setLoading(false);
   };
 
   const updateTask = async task => {
+    setLoading(true);
     const res = await fetch(`https://taskmanagementappserver.onrender.com/api/tasks/${task._id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-auth-token': authToken },
@@ -71,9 +78,11 @@ const App = () => {
     const data = await res.json();
     setTasks(tasks.map(t => (t._id === task._id ? data : t)));
     setCurrentTask(data);
+    setLoading(false);
   };
 
   const deleteTask = async id => {
+    setLoading(true);
     if (currentTask?._id === id) setCurrentTask(null);
     await fetch(`https://taskmanagementappserver.onrender.com/api/tasks/${id}`, {
       method: 'DELETE',
@@ -83,9 +92,11 @@ const App = () => {
     if (currentTask == null && tasks) {
       setCurrentTask(tasks[0])
     }
+    setLoading(false);
   };
 
   const toggleTask = async id => {
+    setLoading(true);
     const res = await fetch(`https://taskmanagementappserver.onrender.com/api/tasks/${id}/toggleTask`, {
       method: 'POST',
       headers: { 'x-auth-token': authToken }
@@ -93,6 +104,7 @@ const App = () => {
     const data = await res.json();
     setTasks(tasks.map(task => (task._id === id ? data : task)));
     setCurrentTask(data);
+    setLoading(false);
   };
 
   const setAuthToken = token => {
@@ -122,10 +134,14 @@ const App = () => {
             <Route path="*" element={authToken ? (
               <div className='flex flex-col w-4/5 mx-auto'>
                 <Header setSearchQuery={setSearchQuery} />
+                {loading ? (
+                  <Loader />
+                ) : (
                 <div className={`${styles.mainContainer}`}>
                   <InboxContainer tasks={filteredTasks} currentTask={currentTask} toggleTask={toggleTask} deleteTask={deleteTask} setCurrentTask={setCurrentTask} addTask={addTask} updateTask={updateTask} clearCurrent={() => setCurrentTask(null)} />
                   {currentTask && !isTablet && <MailDetail  currentTask={currentTask} deleteTask={deleteTask} updateTask={updateTask} setCurrentTask={setCurrentTask} clearCurrent={() => setCurrentTask(null)}/>}
                 </div>
+                )}
               </div>
             ) : (
               <Landing />
