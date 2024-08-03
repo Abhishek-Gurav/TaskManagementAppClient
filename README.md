@@ -91,8 +91,4 @@ Builds the app for production to the `build` folder.
 - [React](https://reactjs.org/)
 - [React Router](https://reactrouter.com/)
 - [CSS Modules](https://github.com/css-modules/css-modules)
-<<<<<<< HEAD
 - [Tailwind CSS](https://tailwindcss.com/)
-=======
-- [Tailwind CSS](https://tailwindcss.com/)
->>>>>>> 35b331a17274ad59ebc0be18be2ae96f54ff4862
